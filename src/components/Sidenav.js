@@ -6,23 +6,24 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Link, useNavigate } from "react-router-dom";
+
+import { Button } from "@mui/material";
 
 const drawerWidth = 240;
 
 function Sidenav(props) {
   const { window } = props;
   const navigate = useNavigate();
+
+
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -34,6 +35,28 @@ function Sidenav(props) {
         sx={{ height: 100 + "vh", backgroundColor: "#5a1546", color: "#fff" }}
       >
         <Toolbar />
+        <ListItem
+          disablePadding
+          sx={{ display: "block" }}
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              px: 2.5,
+            }}
+          >
+            <DashboardIcon
+              sx={{
+                minWidth: 0,
+                justifyContent: "center",
+              }}
+            ></DashboardIcon>
+            <ListItemText primary="Certificate Genretor" />
+          </ListItemButton>
+        </ListItem>
         <ListItem
           disablePadding
           sx={{ display: "block" }}
@@ -60,7 +83,7 @@ function Sidenav(props) {
           disablePadding
           sx={{ display: "block" }}
           onClick={() => {
-            navigate("/");
+            navigate("/excel");
           }}
         >
           <ListItemButton
@@ -75,14 +98,14 @@ function Sidenav(props) {
                 justifyContent: "center",
               }}
             ></DashboardIcon>
-            <ListItemText primary="PDF Reader" />
+            <ListItemText primary="Excel to Json data" />
           </ListItemButton>
         </ListItem>
         <ListItem
           disablePadding
           sx={{ display: "block" }}
           onClick={() => {
-            navigate("/certificate");
+            navigate("/doc");
           }}
         >
           <ListItemButton
@@ -97,7 +120,29 @@ function Sidenav(props) {
                 justifyContent: "center",
               }}
             ></DashboardIcon>
-            <ListItemText primary="Certificate Genretor" />
+            <ListItemText primary="Doc to Json data" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem
+          disablePadding
+          sx={{ display: "block" }}
+          onClick={() => {
+            navigate("/faq");
+          }}
+        >
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              px: 2.5,
+            }}
+          >
+            <DashboardIcon
+              sx={{
+                minWidth: 0,
+                justifyContent: "center",
+              }}
+            ></DashboardIcon>
+            <ListItemText primary="FAQ" />
           </ListItemButton>
         </ListItem>
       </List>
@@ -129,7 +174,7 @@ function Sidenav(props) {
           </IconButton>
           <Typography variant="h6" noWrap component="div">
             <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-              Components
+              Home
             </Link>
           </Typography>
         </Toolbar>
