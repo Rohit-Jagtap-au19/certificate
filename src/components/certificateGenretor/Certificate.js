@@ -14,9 +14,12 @@ export default function Certificate() {
   const [name, setName] = useState("");
   const [program, setProgram] = useState("");
   const [company, setCompany] = useState("");
-  const [date, setDate] = useState("");
 
-  async function modifyPdf(name, course, grade) {
+  const [ref, setRef] = useState("");
+  const [date, setDate] = useState("");
+  const [todate, setTodate] = useState("");
+
+  async function modifyPdf(name, company, program, date, todate, ref) {
     const existingPdfBytes = await fetch(pdf).then((res) => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
     const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -31,6 +34,13 @@ export default function Certificate() {
       font: helveticaFont,
       color: rgb(0, 0, 0),
     });
+    firstPage.drawText(company, {
+      x: 152,
+      y: 233,
+      size: 16,
+      font: helveticaFont,
+      color: rgb(0, 0, 0),
+    });
 
     firstPage.drawText(program, {
       x: 328,
@@ -39,15 +49,23 @@ export default function Certificate() {
       font: helveticaFont,
       color: rgb(0, 0, 0),
     });
-    firstPage.drawText(company, {
-      x: 152,
-      y: 233,
+    firstPage.drawText(ref, {
+      x: 725,
+      y: 25,
       size: 16,
       font: helveticaFont,
       color: rgb(0, 0, 0),
     });
+
     firstPage.drawText(date, {
       x: 110,
+      y: 210,
+      size: 16,
+      font: helveticaFont,
+      color: rgb(0, 0, 0),
+    });
+    firstPage.drawText(todate, {
+      x: 215,
       y: 210,
       size: 16,
       font: helveticaFont,
@@ -59,8 +77,8 @@ export default function Certificate() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name && company && program && date !== "") {
-      modifyPdf(name, company, program, date);
+    if ((name && company && program && date && todate && ref !== "")) {
+      modifyPdf(name, company, program, date, todate, ref);
 
       // const valid = ["A+","A","B+","B","C+","C"]
       // if (valid.includes(grade)) {
@@ -120,10 +138,9 @@ export default function Certificate() {
                       justifyContent: "space-between",
                     }}
                   >
+                    {/* for Student Name */}
                     <input
                       type="text"
-                      name="name"
-                      id="name"
                       style={{
                         border: "none",
                         borderBottom: "1px solid black",
@@ -133,10 +150,9 @@ export default function Certificate() {
                       placeholder="Student Name"
                       onChange={(e) => setName(e.target.value)}
                     />
+                    {/* For company Name */}
                     <input
                       type="text"
-                      name="company"
-                      id="company"
                       style={{
                         border: "none",
                         borderBottom: "1px solid black",
@@ -153,10 +169,9 @@ export default function Certificate() {
                       justifyContent: "space-between",
                     }}
                   >
+                    {/* Program Name */}
                     <input
                       type="text"
-                      name="program"
-                      id="program"
                       style={{
                         border: "none",
                         borderBottom: "1px solid black",
@@ -166,10 +181,29 @@ export default function Certificate() {
                       placeholder="Program Name"
                       onChange={(e) => setProgram(e.target.value)}
                     />
+                    {/* For ref Id */}
+                    <input
+                      type="text"
+                      style={{
+                        border: "none",
+                        borderBottom: "1px solid black",
+                        fontSize: "20px",
+                        width: "45%",
+                      }}
+                      placeholder="Ref ID"
+                      onChange={(e) => setRef(e.target.value)}
+                    />
+                  </div>
+                  <div
+                    className="Date"
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <small>from</small>
                     <input
                       type="date"
-                      name="date"
-                      id="date"
                       style={{
                         border: "none",
                         borderBottom: "1px solid black",
@@ -179,10 +213,10 @@ export default function Certificate() {
                       placeholder="Selct Date"
                       onChange={(e) => setDate(e.target.value)}
                     />
+                    <small>To</small>
+
                     <input
                       type="date"
-                      name="date"
-                      id="date"
                       style={{
                         border: "none",
                         borderBottom: "1px solid black",
@@ -190,7 +224,7 @@ export default function Certificate() {
                         width: "45%",
                       }}
                       placeholder="Selct Date"
-                      onChange={(e) => setDate(e.target.value)}
+                      onChange={(e) => setTodate(e.target.value)}
                     />
                   </div>
 
