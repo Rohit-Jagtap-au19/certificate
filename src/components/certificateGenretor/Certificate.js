@@ -17,9 +17,8 @@ export default function Certificate() {
 
   const [ref, setRef] = useState("");
   const [date, setDate] = useState("");
-  const [todate, setTodate] = useState("");
 
-  async function modifyPdf(name, company, program, date, todate, ref) {
+  async function modifyPdf(name, company, program, date, ref) {
     const existingPdfBytes = await fetch(pdf).then((res) => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
     const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -29,22 +28,22 @@ export default function Certificate() {
     const { width, height } = firstPage.getSize();
     firstPage.drawText(name, {
       x: 70,
-      y: 280,
+      y: 320,
       size: 45,
       font: helveticaFont,
       color: rgb(0, 0, 0),
     });
     firstPage.drawText(company, {
-      x: 152,
-      y: 233,
+      x: 260,
+      y: 253,
       size: 16,
       font: helveticaFont,
       color: rgb(0, 0, 0),
     });
 
     firstPage.drawText(program, {
-      x: 328,
-      y: 253,
+      x: 425,
+      y: 278,
       size: 16,
       font: helveticaFont,
       color: rgb(0, 0, 0),
@@ -58,27 +57,21 @@ export default function Certificate() {
     });
 
     firstPage.drawText(date, {
-      x: 110,
-      y: 210,
+      x: 210,
+      y: 175,
       size: 16,
       font: helveticaFont,
       color: rgb(0, 0, 0),
     });
-    firstPage.drawText(todate, {
-      x: 215,
-      y: 210,
-      size: 16,
-      font: helveticaFont,
-      color: rgb(0, 0, 0),
-    });
+    
     const uri = await pdfDoc.saveAsBase64({ dataUri: true });
     saveAs(uri, "Certificate.pdf", { autoBom: true });
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if ((name && company && program && date && todate && ref !== "")) {
-      modifyPdf(name, company, program, date, todate, ref);
+    if ((name && company && program && date && ref !== "")) {
+      modifyPdf(name, company, program, date, ref);
 
       // const valid = ["A+","A","B+","B","C+","C"]
       // if (valid.includes(grade)) {
@@ -201,7 +194,6 @@ export default function Certificate() {
                       justifyContent: "space-between",
                     }}
                   >
-                    <small>from</small>
                     <input
                       type="date"
                       style={{
@@ -213,19 +205,7 @@ export default function Certificate() {
                       placeholder="Selct Date"
                       onChange={(e) => setDate(e.target.value)}
                     />
-                    <small>To</small>
-
-                    <input
-                      type="date"
-                      style={{
-                        border: "none",
-                        borderBottom: "1px solid black",
-                        fontSize: "20px",
-                        width: "45%",
-                      }}
-                      placeholder="Selct Date"
-                      onChange={(e) => setTodate(e.target.value)}
-                    />
+                    
                   </div>
 
                   <Button
